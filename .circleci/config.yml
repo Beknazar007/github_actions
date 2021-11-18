@@ -31,8 +31,10 @@ jobs:
           
       - run:
           name: "apply"
-          command: terraform apply --auto-approve
-          
+          command: terraform apply --auto-approve 
+      - run:
+          name: "destroy"
+          command: terraform destroy --auto-approve     
 workflows: 
   build:
     jobs:
@@ -47,3 +49,4 @@ workflows:
           requires: 
             - hold
             - build
+          
