@@ -24,26 +24,26 @@ jobs:
       - run:
           name: "init"
           command: terraform init 
-          context: GOOGLE_GREDENTIALS
+          
       - run:
           name: "plan"
           command: terraform plan
-          context: GOOGLE_GREDENTIALS
+          
       - run:
           name: "apply"
           command: terraform apply --auto-approve
-          context: GOOGLE_GREDENTIALS 
+          
 workflows: 
   build:
     jobs:
       - build
-          
+        context: GOOGLE_GREDENTIALS  
       - hold:
           type: approval 
           requires:
             - build
       - build2:
-          
+          context: GOOGLE_GREDENTIALS
           requires: 
             - hold
             - build
