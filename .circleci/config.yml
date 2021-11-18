@@ -24,15 +24,15 @@ jobs:
       - run:
           name: "init"
           command: terraform init 
-            context: $GOOGLE_GREDENTIALS
+            context: GOOGLE_GREDENTIALS
       - run:
           name: "plan"
           command: terraform plan
-            context: $GOOGLE_GREDENTIALS
+            context: GOOGLE_GREDENTIALS
       - run:
           name: "apply"
           command: terraform apply --auto-approve
-            context: $GOOGLE_GREDENTIALS 
+            context: GOOGLE_GREDENTIALS 
 workflows: 
   build:
     jobs:
