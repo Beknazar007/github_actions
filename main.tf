@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "my-bucket-nur-kg-02"
-    prefix = "main"
+    bucket = "beki-my-bucket-for-circleci"
+    prefix = "terraform/state"
   }  
   
   required_providers {
