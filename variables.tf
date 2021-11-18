@@ -1,6 +1,6 @@
 variable "project_id" {
   type    = string
-  default = "playground-s-11-b1428638"
+  default = "unified-chess-331509"
 }
 
 
