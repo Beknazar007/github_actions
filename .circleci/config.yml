@@ -48,6 +48,6 @@ workflows:
       - build2:
           context: GOOGLE_CREDENTIALS
           requires: 
-            - Attention When you will approve
+            - Attention When you will approve.
             - build
           
