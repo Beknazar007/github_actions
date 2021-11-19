@@ -46,3 +46,34 @@ Thank you
 I hope everything was clear
 If you have any questions regarding to this project you can text me to email:
 esenbaevnurmuhamed7@gmail.com
+
+# Adding CircleCI
+
+> I have added Circleci for this project with the same logic as Nurmukhammed does.
+1. Adding credentials to the Circleci Context and take it from there.(this was Beki's GCP creds )
+
+        
+1. Creating Google storage for **.tfstate** file to safe our spin up info about terraform file
+
+        terraform {
+            backend "gcs" {
+              bucket = "beki-my-bucket-for-circleci"
+              prefix = "terraform/state"
+            }  
+1. In circleci we have to put context after workflow and than it will work.
+        
+        workflows: 
+          build:
+            jobs:
+              - build:
+                  context: GOOGLE_CREDENTIALS 
+              - Attention When you will approve:
+                  type: approval 
+                  requires:
+                    - build
+              - build2:
+                  context: GOOGLE_CREDENTIALS
+                  requires: 
+                    - Attention When you will approve.
+                    - build
+
