@@ -29,7 +29,8 @@ jobs:
       - run:
           name: "apply"
           command: terraform apply --auto-approve 
-      
+        
+          
 
   plan-destroy:
     docker:
