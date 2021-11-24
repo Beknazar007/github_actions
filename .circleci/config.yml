@@ -1,25 +1,7 @@
 version: 2
-jobs:
-  plan_to_destroy:
-    docker:
-      - image: hashicorp/terraform:latest
-    working_directory: /terraform/state
-    steps:
-      - checkout
-      - run:
-          name: Init
-          command: terraform init -input=false
-      - run:
-          name: Plan
-          command: terraform plan -destroy -input=false -out=tfplan -no-color
-      - run:
-          name: Render plan for PR comment
-          command: terraform show -no-color tfplan > tfplan.txt
-      - persist_to_workspace:
-          root: /terraform/state
-          paths:
-            - .
 
+
+jobs:
   plan_to_deploy:
     working_directory: /terraform/state
     docker: 
@@ -49,7 +31,26 @@ jobs:
       - run:
           name: "apply"
           command: terraform apply --auto-approve 
-    
+          
+  plan_to_destroy:
+    docker:
+      - image: hashicorp/terraform:latest
+    working_directory: /terraform/state
+    steps:
+      - checkout
+      - run:
+          name: Init
+          command: terraform init -input=false
+      - run:
+          name: Plan
+          command: terraform plan -destroy -input=false -out=tfplan -no-color
+      - run:
+          name: Render plan for PR comment
+          command: terraform show -no-color tfplan > tfplan.txt
+      - persist_to_workspace:
+          root: /terraform/state
+          paths:
+            - .    
    
   destroy:
     docker:
@@ -64,7 +65,7 @@ jobs:
   
 workflows:
   version: 2
-  plan_pr:
+  deploy_destroy:
     jobs:
       - plan_to_deploy:
           context: GOOGLE_CREDENTIALS 
