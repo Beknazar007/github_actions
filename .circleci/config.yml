@@ -19,7 +19,7 @@ jobs:
   build2:
     docker: 
       - image: hashicorp/terraform  
-    working_directory: ~/terraform   
+    working_directory: ~/terraform/state  
     steps:
       - checkout 
       - run:
@@ -29,14 +29,14 @@ jobs:
           name: "apply"
           command: terraform apply --auto-approve 
       
-          
+
  
  
  
   destroy:
     docker:
       - image: hashicorp/terraform  
-    working_directory: ~/terraform
+    working_directory: ~/terraform/state
     steps:
       - run:
           name: "init"
