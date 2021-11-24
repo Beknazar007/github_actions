@@ -18,7 +18,8 @@ jobs:
       
   build2:
     docker: 
-      - image: hashicorp/terraform     
+      - image: hashicorp/terraform  
+    working_directory: ~/terraform   
     steps:
       - checkout 
       - run:
@@ -36,6 +37,7 @@ jobs:
   destroy:
     docker:
       - image: hashicorp/terraform  
+    working_directory: ~/terraform
     steps:
       - run:
           name: "init"
