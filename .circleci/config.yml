@@ -70,7 +70,7 @@ workflows:
           context: GOOGLE_CREDENTIALS 
       
       - hold:
-          type: aprroval
+          type:  approval
       
       - build2:
           context: GOOGLE_CREDENTIALS 
@@ -82,11 +82,11 @@ workflows:
           context: GOOGLE_CREDENTIALS
       
       - approve_desroty1:
-          type: aprroval
+          type:  approval
           requires:
             - plan
       - approve_desroty2:
-          type: aprroval
+          type:  approval
           requires:
             - plan
        
