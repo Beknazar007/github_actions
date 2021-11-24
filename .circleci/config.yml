@@ -18,21 +18,25 @@ jobs:
       
   build2:
     docker: 
-      - image: hashicorp/terraform   # this terraform image to run our project 
+      - image: hashicorp/terraform     
     steps:
       - checkout 
       - run:
           name: "init"
           command: terraform init 
           
-      - run:
-          name: "plan"
-          command: terraform plan
+      
           
       - run:
           name: "apply"
           command: terraform apply --auto-approve 
-          
+  destroy:
+    docker:
+      - image: hashicorp/terraform  
+    steps:
+      - run:
+          name: "init"
+          command: terraform init      
       - run:
           name: "destroy"
           command: terraform destroy --auto-approve     
@@ -48,6 +52,11 @@ workflows:
       - build2:
           context: GOOGLE_CREDENTIALS
           requires: 
-            - Attention When you will approve.
+            - Attention When you will approve
+            - build
+      - destroy:
+          context: GOOGLE_CREDENTIALS
+          type: approval
+          requires:
             - build
           
