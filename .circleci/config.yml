@@ -11,7 +11,7 @@ jobs:
           command: terraform init -input=false
       - run:
           name: Plan
-          command: terraform plan -input=false -out=tfplan -no-color
+          command: terraform destroy -input=false -out=tfplan -no-color
       - run:
           name: Render plan for PR comment
           command: terraform show -no-color tfplan > tfplan.txt
