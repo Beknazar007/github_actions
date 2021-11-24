@@ -90,13 +90,13 @@ workflows:
       - approve_desroty2:
           type:  approval
           requires:
-            - plan
+            - approve_desroty1
        
       
       - destroy:
           context: GOOGLE_CREDENTIALS 
           requires:
-            - plan
+            
             - approve_desroty1
             - approve_desroty2
           
