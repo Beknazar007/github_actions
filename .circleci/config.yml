@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  plan:
+  plan_to_destroy:
     docker:
       - image: hashicorp/terraform:latest
     working_directory: /terraform/state
@@ -20,7 +20,7 @@ jobs:
           paths:
             - .
 
-  build1:
+  plan_to_deploy:
     working_directory: /terraform/state
     docker: 
       - image: hashicorp/terraform  
@@ -35,7 +35,7 @@ jobs:
           name: "plan"
           command: terraform plan   -input=false 
   
-  build2:
+  deploy:
     working_directory: /terraform/state
     docker: 
       - image: hashicorp/terraform  
@@ -66,27 +66,27 @@ workflows:
   version: 2
   plan_pr:
     jobs:
-      - build1:
+      - plan_to_deploy:
           context: GOOGLE_CREDENTIALS 
       
       - hold:
           type:  approval
       
-      - build2:
+      - deploy:
           context: GOOGLE_CREDENTIALS 
           requires:
-            - build1
+            - plan_to_deploy
             - hold
       
-      - plan:
+      - plan_to_destroy:
           context: GOOGLE_CREDENTIALS
           requires:
-            - build2
+            - deploy
       
       - approve_desroty1:
           type:  approval
           requires:
-            - plan
+            - plan_to_destroy
       - approve_desroty2:
           type:  approval
           requires:
