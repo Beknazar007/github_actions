@@ -30,6 +30,9 @@ jobs:
       - run:
           name: "apply"
           command: terraform apply --auto-approve 
+      - run:
+          name: "destroy"
+          command: terraform destroy --auto-approve 
   destroy:
     docker:
       - image: hashicorp/terraform  
