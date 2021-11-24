@@ -54,9 +54,22 @@ workflows:
           requires: 
             - Attention When you will approve
             - build
+      - Pay attention to click  it will destroy :
+          type: approval
+          requires: 
+            - Attention When you will approve
+            - build
+            - build2
+      - Are you shure to destroy:
+          type: approval
+          requires: 
+            - Attention When you will approve
+            - build
+            - build2 
       - destroy:
           context: GOOGLE_CREDENTIALS
-          type: approval
           requires:
             - build
+            - Pay attention to click  it will destroy
+            - Are you shure to destroy
           
