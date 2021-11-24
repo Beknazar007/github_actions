@@ -51,7 +51,7 @@ jobs:
         command: terraform apply --auto-approve 
     
    
-   destroy:
+  destroy:
      docker:
        - image: hashicorp/terraform:latest
      working_directory: /terraform/state
