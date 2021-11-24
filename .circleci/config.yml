@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  plan_destroy:
+  plan1:
     docker:
       - image: hashicorp/terraform:latest
     working_directory: /terraform/state
@@ -78,23 +78,23 @@ workflows:
             - build1
             - hold
       
-      - plan_destroy:
+      - plan1:
           context: GOOGLE_CREDENTIALS
       
       - approve_desroty1:
           type: aprroval
           requires:
-            - plan_destroy
+            - plan1
       - approve_desroty2:
           type: aprroval
           requires:
-            - plan_destroy
+            - plan1
        
       
       - destroy:
           context: GOOGLE_CREDENTIALS 
           requires:
-            - plan_destroy
+            - plan1
             - approve_desroty1
             - approve_desroty2
           
