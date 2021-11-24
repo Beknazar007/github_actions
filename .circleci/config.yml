@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  plan:
+  plan destroy:
     docker:
       - image: hashicorp/terraform:latest
     working_directory: /terraform/state
@@ -20,28 +20,82 @@ jobs:
           paths:
             - .
 
-  apply:
-    docker:
-      - image: hashicorp/terraform:latest
-    working_directory: /terraform/state
-    steps:
-      - attach_workspace:
-          at: /terraform/state
-      - run:
-          name: Apply
-          command: terraform apply tfplan
-
+  build1:
+  working_directory: /terraform/state
+  docker: 
+    - image: hashicorp/terraform  
+    
+  steps:
+    - checkout 
+    - run:
+        name: "init"
+        command: terraform init
+     
+    - run:
+        name: "plan"
+        command: terraform plan   -input=false 
+  
+  build2:
+  working_directory: /terraform/state
+  docker: 
+    - image: hashicorp/terraform  
+    
+  steps:
+    - checkout 
+    - run:
+        name: "init"
+        command: terraform init
+     
+    - run:
+        name: "apply"
+        command: terraform apply --auto-approve 
+    
+   
+   destroy:
+     docker:
+       - image: hashicorp/terraform:latest
+     working_directory: /terraform/state
+     steps:
+       - attach_workspace:
+           at: /terraform/state
+       - run:
+           name: destroy
+           command: terraform destroy tfplan
   
 workflows:
   version: 2
   plan_pr:
     jobs:
-      - plan:
+      - build1:
           context: GOOGLE_CREDENTIALS 
       
-      - apply:
+      - hold:
+          type: aprroval
+      
+      - build2:
           context: GOOGLE_CREDENTIALS 
           requires:
-            - plan
+            - build1
+            - hold
+      
+      - plan destroy:
+          context: GOOGLE_CREDENTIALS
+      
+      - approve_desroty1:
+          type: aprroval
+          requires:
+            - plan destroy
+      - approve_desroty2:
+          type: aprroval
+          requires:
+            - plan destroy
+       
+      
+      - destroy:
+          context: GOOGLE_CREDENTIALS 
+          requires:
+            - plan destroy
+            - approve_desroty1
+            - approve_desroty2
           
           
