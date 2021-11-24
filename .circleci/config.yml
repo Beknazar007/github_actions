@@ -1,80 +1,47 @@
-version: 2.1
-
-
-jobs: 
-  build:
-    working_directory: /terraform/state
-    docker: 
-      - image: hashicorp/terraform     
-    steps: 
-      - checkout 
-      - run:
-          name: "init"
-          command: terraform init
-          
-      - run:
-          name: "plan"
-          command: terraform plan
-          
-      
-  build2:
-    docker: 
-      - image: hashicorp/terraform  
-      
-    steps:
-      - checkout 
-      - run:
-          name: "init"
-          command: terraform init 
-      - run:
-          name: "apply"
-          command: terraform apply --auto-approve 
-        
-
-
- 
- 
-  destroy:
+version: 2
+jobs:
+  plan:
     docker:
-      - image: hashicorp/terraform  
-    working_directory: ~/terraform/state
+      - image: hashicorp/terraform:latest
+    working_directory: /terraform/state
     steps:
-          
+      - checkout
       - run:
-          name: "destroy"
-          command: terraform destroy --auto-approve     
+          name: Init
+          command: terraform init -input=false
+      - run:
+          name: Plan
+          command: terraform plan -input=false -out=tfplan -no-color
+      - run:
+          name: Render plan for PR comment
+          command: terraform show -no-color tfplan > tfplan.txt
+      - persist_to_workspace:
+          root: /terraform/state
+          paths:
+            - .
 
+  apply:
+    docker:
+      - image: hashicorp/terraform:latest
+    working_directory: /terraform/state
+    steps:
+      - attach_workspace:
+          at: /terraform/state
+      - run:
+          name: Apply
+          command: terraform apply tfplan
 
-workflows: 
-  build:
+  
+workflows:
+  version: 2
+  plan_pr:
     jobs:
-      - build:
+      - plan:
           context: GOOGLE_CREDENTIALS 
-      - Attention When you will approve:
-          type: approval 
-          requires:
-            - build
-      - build2:
-          context: GOOGLE_CREDENTIALS
-          requires: 
-            - Attention When you will approve
-            - build
-      - Pay attention to click  it will destroy :
-          type: approval
-          requires: 
-            
-            - build2
-      - Are you shure to destroy:
-          type: approval
-          requires: 
-            - Pay attention to click  it will destroy
-            - build2 
       
-            
-      - destroy:
-          context: GOOGLE_CREDENTIALS
+      - apply:
+          context: GOOGLE_CREDENTIALS 
           requires:
-            - build2
-            - Pay attention to click  it will destroy
-            - Are you shure to destroy
+            - plan
+          
           
