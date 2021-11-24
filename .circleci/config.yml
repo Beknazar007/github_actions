@@ -30,22 +30,8 @@ jobs:
           name: "apply"
           command: terraform apply --auto-approve 
         
-          
 
-  plan-destroy:
-    docker:
-      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: terraform create destroy plan
-          command: |
-            terraform plan -destroy -out tfdestroy -var-file default.tfstate
-      - persist_to_workspace:
-          root: .
-          paths:
-            - . 
+
  
  
   destroy:
@@ -53,9 +39,7 @@ jobs:
       - image: hashicorp/terraform  
     working_directory: ~/terraform/state
     steps:
-      - run:
-          name: "init"
-          command: terraform init      
+          
       - run:
           name: "destroy"
           command: terraform destroy --auto-approve     
@@ -85,11 +69,7 @@ workflows:
           requires: 
             - Pay attention to click  it will destroy
             - build2 
-      - plan-destroy:
-          context: GOOGLE_CREDENTIALS
-          requires:
-            
-            - Pay attention to click  it will destroy
+      
             
       - destroy:
           context: GOOGLE_CREDENTIALS
