@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  plan1:
+  plan:
     docker:
       - image: hashicorp/terraform:latest
     working_directory: /terraform/state
@@ -21,46 +21,46 @@ jobs:
             - .
 
   build1:
-  working_directory: /terraform/state
-  docker: 
-    - image: hashicorp/terraform  
-    
-  steps:
-    - checkout 
-    - run:
-        name: "init"
-        command: terraform init
-     
-    - run:
-        name: "plan"
-        command: terraform plan   -input=false 
+    working_directory: /terraform/state
+    docker: 
+      - image: hashicorp/terraform  
+
+    steps:
+      - checkout 
+      - run:
+          name: "init"
+          command: terraform init
+
+      - run:
+          name: "plan"
+          command: terraform plan   -input=false 
   
   build2:
-  working_directory: /terraform/state
-  docker: 
-    - image: hashicorp/terraform  
-    
-  steps:
-    - checkout 
-    - run:
-        name: "init"
-        command: terraform init
-     
-    - run:
-        name: "apply"
-        command: terraform apply --auto-approve 
+    working_directory: /terraform/state
+    docker: 
+      - image: hashicorp/terraform  
+
+    steps:
+      - checkout 
+      - run:
+          name: "init"
+          command: terraform init
+
+      - run:
+          name: "apply"
+          command: terraform apply --auto-approve 
     
    
   destroy:
-     docker:
-       - image: hashicorp/terraform:latest
-     working_directory: /terraform/state
-     steps:
-       - attach_workspace:
-           at: /terraform/state
-       - run:
-           name: destroy
-           command: terraform destroy tfplan
+    docker:
+      - image: hashicorp/terraform:latest
+    working_directory: /terraform/state
+    steps:
+      - attach_workspace:
+          at: /terraform/state
+      - run:
+          name: destroy
+          command: terraform destroy tfplan
   
 workflows:
   version: 2
@@ -78,23 +78,23 @@ workflows:
             - build1
             - hold
       
-      - plan1:
+      - plan:
           context: GOOGLE_CREDENTIALS
       
       - approve_desroty1:
           type: aprroval
           requires:
-            - plan1
+            - plan
       - approve_desroty2:
           type: aprroval
           requires:
-            - plan1
+            - plan
        
       
       - destroy:
           context: GOOGLE_CREDENTIALS 
           requires:
-            - plan1
+            - plan
             - approve_desroty1
             - approve_desroty2
           
