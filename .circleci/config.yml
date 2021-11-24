@@ -60,7 +60,7 @@ jobs:
           at: /terraform/state
       - run:
           name: destroy
-          command: terraform destroy tfplan
+          command: terraform apply tfplan
   
 workflows:
   version: 2
@@ -80,6 +80,8 @@ workflows:
       
       - plan:
           context: GOOGLE_CREDENTIALS
+          requires:
+            - build2
       
       - approve_desroty1:
           type:  approval
