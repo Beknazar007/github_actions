@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cronjob upgrade the ASG capacities
-        if: ${{ github.event_name == 'schedule' }}
+        # if: ${{ github.event_name == 'schedule' }}
         run: |
           for ENVIRONMENT in $(echo $ENVIRONMENTS | tr ',' ' '); do
             echo "Running for $ENVIRONMENT environment"     
