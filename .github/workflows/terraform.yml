@@ -22,9 +22,9 @@ jobs:
       - name: Cronjob upgrade the ASG capacities
         # if: ${{ github.event_name == 'schedule' }}
         run: |
-          for ENVIRONMENT in $(echo $ENVIRONMENTS | tr ',' ' '); do
-            echo "Running for $ENVIRONMENT environment"     
-            aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', "$ENVIRONMENT")] }}
-            echo $ENVIRONMENT
+          for i in $(echo $ENVIRONMENTS | tr ',' ' '); do
+            echo "Running for $i environment"     
+            aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', "$i")] }}
+            echo $i
             done    
 
