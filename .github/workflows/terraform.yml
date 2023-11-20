@@ -1,13 +1,9 @@
 name: 'Terraform CI CD'
 
-on: 
+on:
   schedule:
-   - cron: '*/2 * * * *'
+    - cron: '*/2 * * * *'
   workflow_dispatch:
-
-  
- 
-
 
 jobs:
   terraform_plan:
@@ -24,7 +20,6 @@ jobs:
         run: |
           for i in $(echo $ENVIRONMENTS | tr ',' ' '); do
             echo "Running for $i environment"     
-            aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', "$i")] }}
+            aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', $i)] }}
             echo $i
-            done    
-
+          done    
