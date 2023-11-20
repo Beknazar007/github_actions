@@ -21,7 +21,7 @@ jobs:
           echo "Running for ${{ matrix.environment }} environment"
           aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', matrix.environment)] }}
           # Your remaining steps here
-  terraform_plan:
+  terraform_apply:
     name: 'Terraform'
     runs-on: ubuntu-latest
 
