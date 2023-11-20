@@ -17,10 +17,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cronjob upgrade the ASG capacities
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets[format('TF_{0}_USER_AWS_KEY', matrix.environment)] }}
+          aws-secret-access-key: ${{ secrets[format('TF_{0}_USER_AWS_SECRET', matrix.environment)] }}
+          aws-region: eu-west-1
+      - name:
         run: |
           echo "Running for ${{ matrix.environment }} environment"
-          aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', matrix.environment)] }}
-          # Your remaining steps here
+
   terraform_apply:
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -31,4 +36,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Cronjob upgrade the ASG capacities
         run: |
-          echo "Running for if workflow dispatch
+          echo "Running for if workflow dispatch"
