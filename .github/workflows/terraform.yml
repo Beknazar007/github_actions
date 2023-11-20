@@ -19,7 +19,13 @@ jobs:
         # if: ${{ github.event_name == 'schedule' }}
         run: |
           for i in $(echo $ENVIRONMENTS | tr ',' ' '); do
-            echo "Running for $i environment"     
-            aws configure set aws_access_key_id ${{ secrets[format('TF_{0}_USER_AWS_KEY', $i)] }}
+            echo "Running for $i environment"
+            secret_name = format('TF_{0}_USER_AWS_KEY', $i)
+            echo $secret_name
+            secret2 = format('Hello {0} {1} {2}', $i, 'the', 'Octocat')
+            echo $secret2
+            secret3 = format('{{Hello {0} {1} {2}!}}', '$i', 'the', 'Octocat')
+            echo $secret3
+            # aws configure set aws_access_key_id ${{ secrets[] }}
             echo $i
           done  
