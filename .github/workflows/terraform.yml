@@ -1,39 +1,28 @@
-name: 'Terraform CI CD'
+name: Send Email
 
 on:
-  schedule:
-    - cron: '*/2 * * * *'
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  terraform_plan:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [QA, DEV, SAT]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Cronjob upgrade the ASG capacities
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets[format('TF_{0}_USER_AWS_KEY', matrix.environment)] }}
-          aws-secret-access-key: ${{ secrets[format('TF_{0}_USER_AWS_SECRET', matrix.environment)] }}
-          aws-region: eu-west-1
-      - name:
-        run: |
-          echo "Running for ${{ matrix.environment }} environment"
-
-  terraform_apply:
-    name: 'Terraform'
+  send_email:
     runs-on: ubuntu-latest
 
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Cronjob upgrade the ASG capacities
-        run: |
-          echo "Running for if workflow dispatch"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        connection_url: ${{ secrets.MAIL_CONNECTION }}
+        server_address: email-smtp.us-east-1.amazonaws.com
+        server_port: 465
+        secure: true
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: Github Actions job result
+        to: saitovbeknazar6@gmail.com
+        from: saitovbeknazar07@gmail.com
+        body: Build job of ${{ github.repository }} completed. Status: ${{ job.status }}
