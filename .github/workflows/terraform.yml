@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Send mail
-      uses: dawidd6/action-send-mail@v3
-      with:
-        connection_url: ${{ secrets.MAIL_CONNECTION }}
-        subject: Github Actions job result
-        to: saitovbeknazar6@gmail.com
-        from: saitovbeknazar07@gmail.com
-        body: Build job of ${{ github.repository }} completed. Status: ${{ job.status }}
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          connection_url: ${{ secrets.MAIL_CONNECTION }}
+          subject: Github Actions job result
+          to: saitovbeknazar6@gmail.com
+          from: saitovbeknazar07@gmail.com
+          body: Build job of ${{ github.repository }} completed. Status: ${{ job.status }}
