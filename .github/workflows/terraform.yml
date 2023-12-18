@@ -20,4 +20,4 @@ jobs:
           subject: Github Actions job result
           to: saitovbeknazar6@gmail.com
           from: saitovbeknazar07@gmail.com
-          body: Build job of ${{ github.repository }} completed. Status: ${{ job.status }}
+          body: Build job of ${{ github.repository }} completed
