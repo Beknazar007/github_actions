@@ -25,10 +25,10 @@ jobs:
         with:
           connection_url: ${{secrets.MAIL_CONNECTION}}
           # Required mail server address if not connection_url:
-          # server_address: email-smtp.us-east-1.amazonaws.com
+          server_address: email-smtp.us-east-1.amazonaws.com
           # Server port, default 25:
-          # username: ${{secrets.MAIL_USERNAME}}
-          # password: ${{secrets.MAIL_PASSWORD}}
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
           subject: Workflow finished
           body: Job completed ${{job.status}}
           to: sait.bek.rakhym@gmail.com
