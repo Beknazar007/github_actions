@@ -1,3 +1,54 @@
+# name: Send Email
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   send_email:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Send Email Notification
+#         uses: dawidd6/action-send-mail@v3
+#         with:
+#           connection_url: ${{ secrets.MAIL_CONNECTION }}
+#           secure: true
+#           # username: ${{ secrets.MAIL_USERNAME }}
+#           # password: ${{ secrets.MAIL_PASSWORD }}
+#           subject: "Workflow finished"
+#           body: "Job completed successfully"
+#           to: sait.bek.rakhym@gmail.com
+#           from: saitovbeknazar6@gmail.com
+#           server_port: 465
+#       # - name: Send mail
+#       #   uses: dawidd6/action-send-mail@v3
+#       #   with:
+#       #     connection_url: ${{secrets.MAIL_CONNECTION}}
+#       #     # Required mail server address if not connection_url:
+#       #     server_address: email-smtp.us-east-1.amazonaws.com
+#       #     # Server port, default 25:
+#       #     username: ${{secrets.MAIL_USERNAME}}
+#       #     password: ${{secrets.MAIL_PASSWORD}}
+#       #     subject: Workflow finished
+#       #     body: Job completed ${{job.status}}
+#       #     to: sait.bek.rakhym@gmail.com
+#       #     from: saitovbeknazar6@gmail.com      
+           
+#           # Optional (recommended) mail server username:
+#           # username: ${{secrets.MAIL_USERNAME}}
+#           # # Optional (recommended) mail server password:
+#           # password: ${{secrets.MAIL_PASSWORD}}
+#           # # Required mail subject:
+#           # subject: Github Actions job result
+#           # # Required recipients' addresses:
+#           # to: obiwan@example.com,yoda@example.com
+#           # # Required sender full name (address can be skipped):
+#           # from: Luke Skywalker # <user@example.com>
+#           # # Optional plain body:
+#           # body: Build job of ${{github.repository}} completed successfully!
+
+
 name: Send Email
 
 on:
@@ -6,47 +57,22 @@ on:
       - main
 
 jobs:
-  send_email:
+  send-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Send Email Notification
         uses: dawidd6/action-send-mail@v3
         with:
-          connection_url: ${{ secrets.MAIL_CONNECTION }}
-          secure: true
-          # username: ${{ secrets.MAIL_USERNAME }}
-          # password: ${{ secrets.MAIL_PASSWORD }}
+          connection_url: "smtps://${{ secrets.MAIL_USERNAME }}:${{ secrets.MAIL_PASSWORD }}@email-smtp.us-east-1.amazonaws.com"
+          server_address: email-smtp.us-east-1.amazonaws.com
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
           subject: "Workflow finished"
           body: "Job completed successfully"
           to: sait.bek.rakhym@gmail.com
           from: saitovbeknazar6@gmail.com
           server_port: 465
-      # - name: Send mail
-      #   uses: dawidd6/action-send-mail@v3
-      #   with:
-      #     connection_url: ${{secrets.MAIL_CONNECTION}}
-      #     # Required mail server address if not connection_url:
-      #     server_address: email-smtp.us-east-1.amazonaws.com
-      #     # Server port, default 25:
-      #     username: ${{secrets.MAIL_USERNAME}}
-      #     password: ${{secrets.MAIL_PASSWORD}}
-      #     subject: Workflow finished
-      #     body: Job completed ${{job.status}}
-      #     to: sait.bek.rakhym@gmail.com
-      #     from: saitovbeknazar6@gmail.com      
-           
-          # Optional (recommended) mail server username:
-          # username: ${{secrets.MAIL_USERNAME}}
-          # # Optional (recommended) mail server password:
-          # password: ${{secrets.MAIL_PASSWORD}}
-          # # Required mail subject:
-          # subject: Github Actions job result
-          # # Required recipients' addresses:
-          # to: obiwan@example.com,yoda@example.com
-          # # Required sender full name (address can be skipped):
-          # from: Luke Skywalker # <user@example.com>
-          # # Optional plain body:
-          # body: Build job of ${{github.repository}} completed successfully!
-
-
 
