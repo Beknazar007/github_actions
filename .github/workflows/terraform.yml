@@ -73,7 +73,6 @@ jobs:
           subject: "Workflow finished"
           body: "Job completed successfully"
           to: sait.bek.rakhym@gmail.com
-          from: saitovbeknazar6@gmail.com
           server_port: 465
 
 
