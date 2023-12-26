@@ -33,7 +33,6 @@ jobs:
           body: Job completed ${{job.status}}
           to: sait.bek.rakhym@gmail.com
           from: saitovbeknazar6@gmail.com       
-           
           # Optional (recommended) mail server username:
           # username: ${{secrets.MAIL_USERNAME}}
           # # Optional (recommended) mail server password:
