@@ -13,7 +13,7 @@ jobs:
         uses: dawidd6/action-send-mail@v3
         with:
           connection_url: ${{ secrets.MAIL_CONNECTION }}
-          server_address: email-smtp.us-east-1.amazonaws.com
+          server_address: smtp.gmail.com
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
