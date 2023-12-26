@@ -22,4 +22,4 @@ jobs:
           subject: Workflow finished
           body: Job completed ${{job.status}}
           to: saitovbeknazar07@gmail.com 
-          from: GitHub Actions
+          from: saitovbeknazar6@gmail.com 
