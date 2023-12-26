@@ -18,7 +18,7 @@ jobs:
           server_address: smtp.gmail.com
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "Workflow ${ { job.status }} - Status: ${{ github.workflow }} ${{ github.sha }}"
+          subject: "Workflow ${{ job.status }} - Status: ${{ github.workflow }} ${{ github.sha }}"
           body: |
             Job completed successfully.
 
