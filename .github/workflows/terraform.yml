@@ -1,17 +1,12 @@
-name: 'Terraform CI CD'
+name: Send Email
 
-on: 
-  schedule:
-   - cron: '* * * * *'
-  workflow_dispatch:
-
-  
- 
-
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  terraform_plan:
-    name: 'Terraform'
+  send_email:
     runs-on: ubuntu-latest
     env:
       ENVIRONMENTS: 'QA,DEV,SAT'   
