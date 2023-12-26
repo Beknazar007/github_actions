@@ -66,7 +66,7 @@ jobs:
       - name: Send Email Notification
         uses: dawidd6/action-send-mail@v3
         with:
-          connection_url: "smtp://${{ secrets.MAIL_USERNAME }}:${{ secrets.MAIL_PASSWORD }}@email-smtp.us-east-1.amazonaws.com"
+          connection_url: "smtp://${{ secrets.MAIL_USERNAME }}:${{ secrets.MAIL_PASSWORD }}@email-smtp.us-east-1.amazonaws.com:465"
           server_address: email-smtp.us-east-1.amazonaws.com
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
