@@ -31,7 +31,7 @@ jobs:
           password: ${{secrets.MAIL_PASSWORD}}
           subject: Workflow finished
           body: Job completed ${{job.status}}
-          to: saitovbeknazar07@gmail.com 
+          to: sait.bek.rakhym@gmail.com
           from: saitovbeknazar6@gmail.com        
           # Optional (recommended) mail server username:
           # username: ${{secrets.MAIL_USERNAME}}
