@@ -73,7 +73,7 @@ jobs:
           subject: "Workflow finished"
           body: "Job completed successfully"
           to: sait.bek.rakhym@gmail.com
-          from: Beknazar
+          from: ${{ secrets.MAIL_USERNAME }}
           server_port: 465
 
 
