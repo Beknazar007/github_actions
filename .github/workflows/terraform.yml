@@ -29,6 +29,6 @@ jobs:
             Commit SHA: ${{ github.sha }}
             Action URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          to: sait.bek.rakhym@gmail.com
+          to: saitovbeknazar07@gmail.com
           from: saitovbeknazar6@gmail.com
           server_port: 465
